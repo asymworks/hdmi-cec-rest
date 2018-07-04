@@ -39,6 +39,11 @@ func SendRootResponse(w http.ResponseWriter) {
 			Methods:       []string{"POST"},
 			Documentation: "Set volume level up, down, or mute by sending post data '{\"state\": \"up\"}'",
 		},
+		requestEndpoint{
+			Endpoint:      "/transmit",
+			Methods:       []string{"POST"},
+			Documentation: "Transmits a command by sending post data '{\"command\": \"up\"}'",
+		},
 	}
 
 	SendOjectResponse(w, response)

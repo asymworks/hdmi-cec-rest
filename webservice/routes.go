@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/bah2830/hdmi-cec-rest/hdmiControl"
+	"github.com/zeroniak/hdmi-cec-rest/hdmiControl"
 	"github.com/gorilla/mux"
 )
 
@@ -21,6 +21,7 @@ func GetRouter() *mux.Router {
 	r.HandleFunc("/device/{port:[0-9]+}", deviceHandler).Methods("GET")
 	r.HandleFunc("/device/{port:[0-9]+}/power", powerHandler).Methods("GET", "POST")
 	r.HandleFunc("/device/{port:[0-9]+}/volume", volumeHandler).Methods("POST")
+	r.HandleFunc("/transmit", transmitHandler).Methods("POST")
 
 	return r
 }
@@ -59,6 +60,9 @@ func powerHandler(w http.ResponseWriter, r *http.Request) {
 
 func volumeHandler(w http.ResponseWriter, r *http.Request) {
 	hdmiControl.SetVolume(getRequestBody(w, r).State)
+}
+func transmitHandler(w http.ResponseWriter, r *http.Request) {
+	hdmiControl.Transmit(getRequestBody(w, r).Command)
 }
 
 func getRequestBody(w http.ResponseWriter, r *http.Request) Request {
