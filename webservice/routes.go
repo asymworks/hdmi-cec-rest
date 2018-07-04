@@ -12,6 +12,9 @@ import (
 type Request struct {
 	State string `json:"state"`
 }
+type TransmitRequest struct {
+	Command string `json:"command"`
+}
 
 func GetRouter() *mux.Router {
 	r := mux.NewRouter()
@@ -62,11 +65,22 @@ func volumeHandler(w http.ResponseWriter, r *http.Request) {
 	hdmiControl.SetVolume(getRequestBody(w, r).State)
 }
 func transmitHandler(w http.ResponseWriter, r *http.Request) {
-	hdmiControl.Transmit(getRequestBody(w, r).Command)
+	hdmiControl.Transmit(getTransmitRequestBody(w, r).Command)
 }
 
 func getRequestBody(w http.ResponseWriter, r *http.Request) Request {
 	var request Request
+
+	decoder := json.NewDecoder(r.Body)
+	err := decoder.Decode(&request)
+	if err != nil {
+		SendError(w, http.StatusInternalServerError, err.Error())
+	}
+
+	return request
+}
+func getTransmitRequestBody(w http.ResponseWriter, r *http.Request) TransmitRequest {
+	var request TransmitRequest
 
 	decoder := json.NewDecoder(r.Body)
 	err := decoder.Decode(&request)
