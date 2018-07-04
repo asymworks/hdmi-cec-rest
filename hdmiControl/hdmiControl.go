@@ -67,7 +67,7 @@ func SetVolume(state string) error {
 	}
 }
 
-func Transmit(command string) error {
-	return hdmi.Transmit(command)
+func Transmit(command string){
+	hdmi.Transmit(command)
 }
 
