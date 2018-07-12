@@ -1,0 +1,109 @@
+#!/bin/bash
+
+### BEGIN INIT INFO
+# Provides:                 HDMI CEC REST Service
+# Required-Start:    $all
+# Required-Stop:     $all
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description:        Start and stop HDMI CEC REST service.
+# Description:              -
+# Date-Creation:            -
+# Date-Last-Modification:   -
+# Author:                   Palle Rosendahl Ehmsen
+### END INIT INFO
+
+# Variables
+PGREP=/usr/bin/pgrep
+EXE=/home/palle/.go/bin/hdmi-cec-rest
+ZERO=0
+
+# Start the MATH
+start() {
+    echo "Starting HDMI CEC Rest Service..."
+    #Verify if the service is running
+    $PGREP -f hdmi-cec-rest > /dev/null
+    VERIFIER=$?
+    if [ $ZERO = $VERIFIER ]
+    then
+        echo "The service is already running"
+    else
+        #Run the jar file HDMI CEC service
+        $EXE > /dev/null &
+        #sleep time before the service verification
+        sleep 10
+        #Verify if the service is running
+        $PGREP -f hdmi-cec-rest  > /dev/null
+        VERIFIER=$?
+        if [ $ZERO = $VERIFIER ]
+        then
+            echo "Service was successfully started"
+        else
+            echo "Failed to start service"
+        fi
+    fi
+    echo
+}
+
+# Stop the MATH
+stop() {
+    echo "Stopping HDMI CEC Rest Service..."
+    #Verify if the service is running
+    $PGREP -f hdmi-cec-rest > /dev/null
+    VERIFIER=$?
+    if [ $ZERO = $VERIFIER ]
+    then
+        #Kill the pid of java with the service name
+        kill -9 $($PGREP -f hdmi-cec-rest)
+        #Sleep time before the service verification
+        sleep 10
+        #Verify if the service is running
+        $PGREP -f hdmi-cec-rest  > /dev/null
+        VERIFIER=$?
+        if [ $ZERO = $VERIFIER ]
+        then
+            echo "Failed to stop service"
+        else
+            echo "Service was successfully stopped"
+        fi
+    else
+        echo "The service is already stopped"
+    fi
+    echo
+}
+
+# Verify the status of HDMI CEC Rest service
+status() {
+    echo "Checking status of MATH..."
+    #Verify if the service is running
+    $PGREP -f hdmi-cec-rest > /dev/null
+    VERIFIER=$?
+    if [ $ZERO = $VERIFIER ]
+    then
+        echo "Service is running"
+    else
+        echo "Service is stopped"
+    fi
+    echo
+}
+
+# Main logic
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    status)
+        status
+        ;;
+    restart|reload)
+        stop
+        start
+        ;;
+  *)
+    echo $"Usage: $0 {start|stop|status|restart|reload}"
+    exit 1
+esac
+exit 0

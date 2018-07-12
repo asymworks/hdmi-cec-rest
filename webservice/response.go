@@ -44,6 +44,11 @@ func SendRootResponse(w http.ResponseWriter) {
 			Methods:       []string{"POST"},
 			Documentation: "Transmits a command by sending post data '{\"command\": \"up\"}'",
 		},
+		requestEndpoint{
+			Endpoint:      "/transmit/[command]",
+			Methods:       []string{"get"},
+			Documentation: "Transmits a command",
+		},
 	}
 
 	SendOjectResponse(w, response)
