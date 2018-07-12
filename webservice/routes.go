@@ -66,6 +66,8 @@ func volumeHandler(w http.ResponseWriter, r *http.Request) {
 	hdmiControl.SetVolume(getRequestBody(w, r).State)
 }
 func transmitHandler(w http.ResponseWriter, r *http.Request) {
+ vars := mux.Vars(r)
+   
  switch r.Method {
         case "GET":
 		hdmiControl.Transmit(vars["command"])
