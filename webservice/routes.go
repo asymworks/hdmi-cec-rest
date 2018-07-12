@@ -68,7 +68,7 @@ func volumeHandler(w http.ResponseWriter, r *http.Request) {
 func transmitHandler(w http.ResponseWriter, r *http.Request) {
  switch r.Method {
         case "GET":
-		hdmiControl.Transmit((vars["command"])
+		hdmiControl.Transmit(vars["command"])
         case "POST":
 		hdmiControl.Transmit(getTransmitRequestBody(w, r).Command)
 
