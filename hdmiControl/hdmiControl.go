@@ -3,6 +3,7 @@ package hdmiControl
 import (
 	"errors"
 	"fmt"
+	"time"
 
 	"github.com/chbmuc/cec"
 )
@@ -40,11 +41,14 @@ func GetActiveDeviceList() map[string]cec.Device {
 }
 
 func GetPowerStatus() string {
-	result := hdmi.GetDevicePowerStatus(hdmiPort)
-	if (result == "") {
-	  result := hdmi.GetDevicePowerStatus(hdmiPort)
-	}
-	return result
+        result := hdmi.GetDevicePowerStatus(hdmiPort)
+        fmt.Println("Getting Device Power for: ",hdmiPort)
+        for i := 1; (i < 5 && result == ""); i++ {
+          fmt.Println("Failed to Get PowerStatus -> I'll try it again", i)
+          time.Sleep(1000 * time.Millisecond)
+          result = hdmi.GetDevicePowerStatus(hdmiPort)
+        }
+        return result
 }
 
 func Power(state string) error {
