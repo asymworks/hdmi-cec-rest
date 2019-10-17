@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 
-	"github.com/zeroniak/hdmi-cec-rest/webservice"
+	"github.com/pavax/hdmi-cec-rest/webservice"
 )
 
 func main() {
