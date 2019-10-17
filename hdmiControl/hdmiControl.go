@@ -40,7 +40,11 @@ func GetActiveDeviceList() map[string]cec.Device {
 }
 
 func GetPowerStatus() string {
-	return hdmi.GetDevicePowerStatus(hdmiPort)
+	result := hdmi.GetDevicePowerStatus(hdmiPort)
+	if (result == "") {
+	  result := hdmi.GetDevicePowerStatus(hdmiPort)
+	}
+	return result
 }
 
 func Power(state string) error {
