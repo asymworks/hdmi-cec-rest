@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/pavax/cec"
+	"github.com/candiesdoodle/cec"
 )
 
 var hdmi *cec.Connection

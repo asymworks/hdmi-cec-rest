@@ -10,12 +10,12 @@
 # Description:              -
 # Date-Creation:            -
 # Date-Last-Modification:   -
-# Author:                   Palle Rosendahl Ehmsen
+# Author:                   openhabian Rosendahl Ehmsen
 ### END INIT INFO
 
 # Variables
 PGREP=/usr/bin/pgrep
-EXE=/home/palle/.go/bin/hdmi-cec-rest
+EXE=/home/openhabian/go/bin/hdmi-cec-rest
 ZERO=0
 
 # Start the MATH
